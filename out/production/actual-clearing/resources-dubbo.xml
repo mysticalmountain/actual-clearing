@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+    <!-- 应用名 -->
+    <dubbo:application name="actualClearing"/>
+    <!-- 注册中心 -->
+    <dubbo:registry protocol="zookeeper" address="${dubbo.registry}"/>
+    <!-- 使用监控服务
+    <dubbo:monitor protocol="registry"/>
+     -->
+    <!-- 帐务/账户相关操作接口 -->
+    <dubbo:reference id="accountApi" interface="com.cnepay.account.api.AccountApi" timeout="60000" version="1.0.0"/>
+    <!-- 帐务/记账相关操作接口  -->
+    <dubbo:reference id="transApi" interface="com.cnepay.account.api.TransApi" timeout="60000" version="1.0.0"/>
+
+</beans>

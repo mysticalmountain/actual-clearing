@@ -1,0 +1,72 @@
+apply plugin: 'java'
+apply plugin: 'groovy'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+apply plugin: 'maven'
+
+group = 'com.cnepay.pos'
+version = '1.0.0'
+
+targetCompatibility = '1.6'
+sourceCompatibility = '1.6'
+
+idea {
+    module {
+        downloadSources = true
+    }
+}
+
+repositories {
+
+    flatDir {
+        dirs 'lib'
+    }
+    mavenLocal()
+    mavenCentral()
+    maven {url 'http://maven.oschina.net/content/groups/public/'}
+    maven {url 'http://jpos.org/maven'}
+    maven {url 'http://192.168.1.15:8080/nexus/content/repositories/snapshots/'}
+    maven {url 'http://192.168.1.15:8080/nexus/content/groups/public/'}
+    maven {url 'http://192.168.1.15:8080/nexus/content/repositories/releases/'}
+}
+
+dependencies {
+    compile fileTree(dir: "$buildDir/../lib", includes: ['*.jar'])
+    compile 'org.codehaus.groovy:groovy-all:2.1.6'
+//    compile 'com.cnepay.icpay:icpay_v3_base:1.0'
+    compile 'org.springframework.boot:spring-boot-starter-web:1.2.5.RELEASE'
+    compile 'native:oracle11:6.0'
+    compile 'com.alibaba:druid:1.0.6'
+    compile 'org.apache.httpcomponents:httpclient:4.1.1'
+    compile ('com.cnepay.common:cnepay-common:1.0') {
+        exclude group: 'org.grails'
+        exclude group: 'javax.servlet'
+    }
+    compile 'com.rabbitmq:amqp-client:3.3.4'
+    compile('com.alibaba:dubbo:2.5.3') {
+        exclude group: 'org.springframework', module: 'spring'
+    }
+    compile ('com.github.sgroschupf:zkclient:0.1'){
+        exclude group: 'javax.jms'
+        exclude group: 'com.sun.jdmk'
+        exclude group: 'com.sun.jmx'
+        exclude group: 'junit'
+    }
+    compile 'com.cnepay.account:account-proxy-api:1.0.0-SNAPSHOT'
+    testCompile 'org.springframework.boot:spring-boot-starter-test:1.2.5.RELEASE'
+}
+
+task createDirs() {
+   sourceSets*.java.srcDirs*.each { it.mkdirs() }
+   sourceSets*.groovy.srcDirs*.each { it.mkdirs() }
+   sourceSets*.resources.srcDirs*.each { it.mkdirs() }
+}
+
+task libs(type: Sync) {
+    from configurations.runtime
+    into "$buildDir/lib"
+}
+
+task wrapper( type: Wrapper ) {
+    gradleVersion = '2.2.1'
+}
