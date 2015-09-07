@@ -25,22 +25,23 @@ repositories {
     mavenCentral()
     maven {url 'http://maven.oschina.net/content/groups/public/'}
     maven {url 'http://jpos.org/maven'}
-//    maven {url 'http://192.168.1.15:8080/nexus/content/repositories/snapshots/'}
-//    maven {url 'http://192.168.1.15:8080/nexus/content/groups/public/'}
-//    maven {url 'http://192.168.1.15:8080/nexus/content/repositories/releases/'}
+    maven {url 'http://192.168.1.15:8080/nexus/content/repositories/snapshots/'}
+    maven {url 'http://192.168.1.15:8080/nexus/content/groups/public/'}
+    maven {url 'http://192.168.1.15:8080/nexus/content/repositories/releases/'}
 }
 
 dependencies {
     compile fileTree(dir: "$buildDir/../lib", includes: ['*.jar'])
     compile 'org.codehaus.groovy:groovy-all:2.1.6'
+//    compile 'com.cnepay.icpay:icpay_v3_base:1.0'
     compile 'org.springframework.boot:spring-boot-starter-web:1.2.5.RELEASE'
-//    compile 'native:oracle11:6.0'
+    compile 'native:oracle11:6.0'
     compile 'com.alibaba:druid:1.0.6'
     compile 'org.apache.httpcomponents:httpclient:4.1.1'
-//    compile ('com.cnepay.common:cnepay-common:1.0') {
-//        exclude group: 'org.grails'
-//        exclude group: 'javax.servlet'
-//    }
+    compile ('com.cnepay.common:cnepay-common:1.0') {
+        exclude group: 'org.grails'
+        exclude group: 'javax.servlet'
+    }
     compile 'com.rabbitmq:amqp-client:3.3.4'
     compile('com.alibaba:dubbo:2.5.3') {
         exclude group: 'org.springframework', module: 'spring'
@@ -51,7 +52,7 @@ dependencies {
         exclude group: 'com.sun.jmx'
         exclude group: 'junit'
     }
-//    compile 'com.cnepay.account:account-proxy-api:1.0.0-SNAPSHOT'
+    compile 'com.cnepay.account:account-proxy-api:1.0.0-SNAPSHOT'
     testCompile 'org.springframework.boot:spring-boot-starter-test:1.2.5.RELEASE'
 }
 
